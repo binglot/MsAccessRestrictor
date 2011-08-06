@@ -9,7 +9,8 @@ namespace WindowsFormsApplication1 {
             //yield return new CtrlAltDelete();
             //yield return new KeyboardHooking();
             //yield return new Taskbar();
-            yield return new Test();
+            //yield return new Test();
+            yield return new Test2();
         }
     }
 }

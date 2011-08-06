@@ -1,10 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 using WindowsFormsApplication1.Interfaces;
 
 namespace WindowsFormsApplication1.Features {
-    public class Test : IFeature {
+    public class Test2 : IFeature {
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -30,65 +31,35 @@ namespace WindowsFormsApplication1.Features {
             [DllImport("user32.dll", EntryPoint = "GetSystemMenu")]
             private static extern IntPtr GetSystemMenu(IntPtr hwnd, int revert);
 
-            [DllImport("user32.dll", EntryPoint = "GetMenuItemCount")]
-            private static extern int GetMenuItemCount(IntPtr hmenu);
+            [DllImport("user32.dll")]
+            static extern bool GetMenuItemInfo(IntPtr hMenu, uint uItem, bool fByPosition, ref MENUITEMINFO lpmii);
 
-            [DllImport("user32.dll", EntryPoint = "RemoveMenu")]
-            private static extern int RemoveMenu(IntPtr hmenu, int npos, int wflags);
+            [StructLayout(LayoutKind.Sequential)]
+            struct MENUITEMINFO {
+                public uint cbSize;
+                public uint fMask;
+                public uint fType;
+                public uint fState;
+                public uint wID;
+                public IntPtr hSubMenu;
+                public IntPtr hbmpChecked;
+                public IntPtr hbmpUnchecked;
+                public string dwTypeData;
+                public IntPtr dwItemData;
+                public uint cch;
+                public IntPtr hbmpItem;
+            }
 
-            [DllImport("user32.dll", EntryPoint = "DrawMenuBar")]
-            private static extern int DrawMenuBar(IntPtr hwnd);
+
 
             private const int MF_BYPOSITION = 0x0400;
-            //private const int MF_BYCOMMAND = 0x0000;
+            private const int MF_BYCOMMAND = 0x0000;
 
             public static void DisableButtons(IntPtr window) {
-                //IntPtr hmenu = GetSystemMenu(window, 0);
-                //int itemCount = GetMenuItemCount(hmenu);
-
-                //for (int i = itemCount; i >= 0; i--) {
-                //    RemoveMenu(hmenu, i, MF_BYPOSITION);
-                //}
-
-                //// seems to be working without it?!
-                //DrawMenuBar(window);
-
-
-                // new way!
-                //EnableCloseButton(window, false);
-
-
-                // better way
-                //EnableCloseButton(window, SystemCommands.SC_CLOSE, false);
-                //EnableCloseButton(window, SystemCommands.SC_SEPARATOR, false);
-                //EnableCloseButton(window, SystemCommands.SC_ARRANGE, false);
-                //EnableCloseButton(window, SystemCommands.SC_RESTORE, false);
-                //EnableCloseButton(window, SystemCommands.SC_RESTORE2, false);
-                //EnableCloseButton(window, SystemCommands.SC_MAXIMIZE, false);
-                //EnableCloseButton(window, SystemCommands.SC_MAXIMIZE2, false);
-                //EnableCloseButton(window, SystemCommands.SC_MINIMIZE, false);
-
-
-                // one more go
-                IntPtr hMenu = GetSystemMenu(window, 0);
-                if (hMenu.ToInt32() != 0) {
-                    for (int i = GetMenuItemCount(hMenu) - 1; i >= 0; i--) {
-                        StringBuilder menuName = new StringBuilder(0x20);
-                        GetMenuString(hMenu.ToInt32(), (uint)i, menuName, 0x20, MF_BYPOSITION);
-                        ModifyMenu(hMenu, (uint) i, MF_BYCOMMAND | MF_GRAYED, UIntPtr.Zero, menuName.ToString());
-                    }
-                }
+                EnableCloseButton(window, SystemCommands.SC_CLOSE, false);
             }
 
             public static void EnableButtons(IntPtr window) {
-                //IntPtr hmenu = GetSystemMenu(window, 0);
-                //for (int i = 8; i >= 0; i--) {
-                //    RemoveMenu(hmenu, i, MF_BYCOMMAND);
-                //}
-
-                //DrawMenuBar(window);
-
-                // new way!
                 EnableCloseButton(window, SystemCommands.SC_CLOSE, true);
             }
 
@@ -98,21 +69,39 @@ namespace WindowsFormsApplication1.Features {
             const UInt32 MF_ENABLED = 0x00000000;
             const UInt32 MF_GRAYED = 0x00000001;
             const UInt32 MF_DISABLED = 0x00000002;
-            const uint MF_BYCOMMAND = 0x00000000;
+            //const uint MF_BYCOMMAND = 0x00000000;
 
-
-            [DllImport("User32.dll")]
-            static extern int GetMenuString(int hMenu, uint uIDItem, StringBuilder lpString, int nMaxCount, uint uFlag);
             [DllImport("user32.dll")]
             static extern bool ModifyMenu(IntPtr hMnu, uint uPosition, uint uFlags, UIntPtr uIDNewItem, string lpNewItem);
+            [DllImport("user32.dll")]
+            static extern UIntPtr GetMenuItemID(IntPtr hMenu, int nPos);
+            [DllImport("user32.dll")]
+            static extern int GetMenuString(IntPtr hMenu, uint uIDItem, [Out, MarshalAs(UnmanagedType.LPStr)] StringBuilder lpString, int nMaxCount, uint uFlag);
+            [DllImport("user32.dll", EntryPoint = "GetMenuItemCount")]
+            private static extern int GetMenuItemCount(IntPtr hmenu);
 
-            static void EnableCloseButton(IntPtr window, SystemCommands button, bool bEnabled) {
-                var hSystemMenu = GetSystemMenu(window, 0);
-                //EnableMenuItem(hSystemMenu, (uint)button , (uint)(MF_ENABLED | (bEnabled ? MF_ENABLED : MF_GRAYED)));
-                EnableMenuItem(hSystemMenu, (uint)button, (uint)(bEnabled ? MF_ENABLED : MF_GRAYED | MF_DISABLED));
+            static void EnableCloseButton(IntPtr window, SystemCommands button, bool enabled) {
+                var systemMenu = GetSystemMenu(window, 0);
+
+                for (int i = GetMenuItemCount(systemMenu) - 1; i >= 0; i--) {
+                    var label = new StringBuilder(256);
+                    GetMenuString(systemMenu, (uint)i, label, 256, MF_BYPOSITION);
+
+                    if (label.ToString() != "" && i == 6) {
+                        var flags = MF_BYCOMMAND | (enabled ? MF_ENABLED : MF_DISABLED);
+                        var itemId = GetMenuItemID(systemMenu, i);
+                        ModifyMenu(systemMenu, (uint)button, flags, itemId, label.ToString());
+                    }
+                }
+
+
+
+
+                //ModifyMenu(systemMenu, (uint)button, MF_BYCOMMAND | (enabled ? MF_ENABLED : MF_GRAYED), GetMenuItemID(systemMenu, 0), "Close");
+                //ModifyMenu(systemMenu, (uint)button, MF_BYCOMMAND | MF_ENABLED, GetMenuItemID(systemMenu, 6), "Close");
             }
 
-            public enum SystemCommands {
+            enum SystemCommands : uint {
                 SC_SIZE = 0xF000,
                 SC_MOVE = 0xF010,
                 SC_MINIMIZE = 0xF020,
@@ -160,8 +149,6 @@ namespace WindowsFormsApplication1.Features {
                 SC_CONTEXTHELP = 0xF180,
                 SC_SEPARATOR = 0xF00F
             }
-
-
         }
 
 

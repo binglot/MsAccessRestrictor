@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="FeaturesManager.cs" />
     <Compile Include="FeaturesProvider.cs" />
+    <Compile Include="Features\Test2.cs" />
     <Compile Include="Features\CtrlAltDelete.cs" />
     <Compile Include="Features\Taskbar.cs" />
     <Compile Include="Features\Test.cs" />
