@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using WindowsFormsApplication1.Features;
 
 namespace WindowsFormsApplication1 {
     static class Program {
@@ -13,7 +10,7 @@ namespace WindowsFormsApplication1 {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(new FeaturesManager()));
+            Application.Run(new MainForm(new FeaturesManager()));
         }
     }
 }

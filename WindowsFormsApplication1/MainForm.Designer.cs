@@ -1,5 +1,5 @@
 ﻿namespace WindowsFormsApplication1 {
-    partial class Form1 {
+    partial class MainForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -25,13 +25,19 @@
         private void InitializeComponent() {
             this.SuspendLayout();
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 273);
-            this.Name = "Form1";
+            this.ClientSize = new System.Drawing.Size(0, 0);
+            this.ControlBox = false;
+            this.Enabled = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "MainForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.Text = "Form1";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);

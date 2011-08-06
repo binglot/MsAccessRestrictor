@@ -108,7 +108,7 @@ namespace WindowsFormsApplication1.Features {
         /// <param name="lParam">parameter</param>
         /// <returns>true to continue enumeration, false to stop it</returns>
         private static bool MyEnumThreadWindowsProc(IntPtr hWnd, IntPtr lParam) {
-            StringBuilder buffer = new StringBuilder(256);
+            var buffer = new StringBuilder(256);
             if (GetWindowText(hWnd, buffer, buffer.Capacity) > 0) {
                 Console.WriteLine(buffer);
                 if (buffer.ToString() == VistaStartMenuCaption) {
