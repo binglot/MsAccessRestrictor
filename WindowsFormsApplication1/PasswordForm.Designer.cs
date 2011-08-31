@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1 {
+﻿namespace MsAccessRestrictor {
     partial class PasswordForm {
         /// <summary>
         /// Required designer variable.

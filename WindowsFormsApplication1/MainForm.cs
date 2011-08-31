@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
+using MsAccessRestrictor.Interfaces;
 
-namespace WindowsFormsApplication1 {
+namespace MsAccessRestrictor {
     public partial class MainForm : Form {
-        private readonly FeaturesManager _features;
+        private readonly IFeaturesManager _features;
         public static MainForm Instance;
 
-        public MainForm(FeaturesManager features) {
+        public MainForm(IFeaturesManager features) {
             _features = features;
             Instance = this;
             InitializeComponent();

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WindowsFormsApplication1.Interfaces {
+namespace MsAccessRestrictor.Interfaces {
     public interface IFeaturesProvider {
         IEnumerable<IFeature> GetFeatures();
     }

@@ -1,7 +1,7 @@
 using System;
-using WindowsFormsApplication1.Interfaces;
+using MsAccessRestrictor.Interfaces;
 
-namespace WindowsFormsApplication1.Features {
+namespace MsAccessRestrictor.Features {
     public class WindowFocus : IFeature {
         private readonly IntPtr _windowHandle;
 

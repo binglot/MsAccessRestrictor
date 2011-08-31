@@ -8,8 +8,8 @@
     <ProjectGuid>{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowsFormsApplication1</RootNamespace>
-    <AssemblyName>WindowsFormsApplication1</AssemblyName>
+    <RootNamespace>MsAccessRestrictor</RootNamespace>
+    <AssemblyName>MsAccessRestrictor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -54,6 +54,7 @@
     <Compile Include="Features\CtrlAltDelete.cs" />
     <Compile Include="Features\Taskbar.cs" />
     <Compile Include="Features\WindowFocus.cs" />
+    <Compile Include="Interfaces\IFeaturesManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +88,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

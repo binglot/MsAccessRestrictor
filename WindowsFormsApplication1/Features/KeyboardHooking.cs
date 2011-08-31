@@ -1,36 +1,9 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using WindowsFormsApplication1.Interfaces;
+using MsAccessRestrictor.Interfaces;
 
-namespace WindowsFormsApplication1.Features {
+namespace MsAccessRestrictor.Features {
     public class KeyboardHooking : IFeature {
-        [DllImport("user32", EntryPoint = "SetWindowsHookExA", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
-        static extern int SetWindowsHookEx(int idHook, LowLevelKeyboardProcDelegate lpfn, int hMod, int dwThreadId);
-
-        [DllImport("user32", EntryPoint = "UnhookWindowsHookEx", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
-        static extern int UnhookWindowsHookEx(int hHook);
-        delegate int LowLevelKeyboardProcDelegate(int nCode, int wParam, ref HookStruct lParam);
-
-        [DllImport("user32", EntryPoint = "CallNextHookEx", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
-        private static extern int CallNextHookEx(int hHook, int nCode, int wParam, ref HookStruct lParam);
-
-        //[DllImport("user32.dll", EntryPoint = "FindWindow", SetLastError = true)]
-        //static extern IntPtr FindWindowByCaption(int zeroOnly, string lpWindowName);
-
-        //[DllImport("user32.dll")]
-        //static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-
-#pragma warning disable 649, 169
-        private struct HookStruct {
-            public int VkCode;
-            private int _scanCode;
-            public int Flags;
-            private int _time;
-            private int _dwExtraInfo;
-        }
-#pragma warning restore 649, 169
-
         const int KeyboardWindowHandler = 13;
         readonly int _instance;
         int _intLlKey;
@@ -43,7 +16,7 @@ namespace WindowsFormsApplication1.Features {
             _instance = Marshal.GetHINSTANCE(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0]).ToInt32();
         }
 
-        private static int LowLevelKeyboardProc(int nCode, int wParam, ref HookStruct lParam) {
+        private static int LowLevelKeyboardProc(int nCode, int wParam, ref WinApi.HookStruct lParam) {
             bool blnEat = false;
 
             switch (wParam) {
@@ -70,7 +43,7 @@ namespace WindowsFormsApplication1.Features {
                     break;
             }
 
-            return blnEat ? 1 : CallNextHookEx(0, nCode, wParam, ref lParam);
+            return blnEat ? 1 : WinApi.CallNextHookEx(0, nCode, wParam, ref lParam);
         }
 
         private static void ShowPasswordDialog() {
@@ -83,8 +56,8 @@ namespace WindowsFormsApplication1.Features {
             }
         }
 
-        private static int HookWindowsHookEx(LowLevelKeyboardProcDelegate lpfn, int hMod) {
-            return SetWindowsHookEx(KeyboardWindowHandler, lpfn, hMod, 0);
+        private static int HookWindowsHookEx(WinApi.LowLevelKeyboardProcDelegate lpfn, int hMod) {
+            return WinApi.SetWindowsHookEx(KeyboardWindowHandler, lpfn, hMod, 0);
         }
 
         public void Run() {
@@ -92,7 +65,7 @@ namespace WindowsFormsApplication1.Features {
         }
 
         public void Clear() {
-            UnhookWindowsHookEx(_intLlKey);
+            WinApi.UnhookWindowsHookEx(_intLlKey);
         }
     }
 }

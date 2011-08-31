@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WindowsFormsApplication1 {
+namespace MsAccessRestrictor {
     static class Utils {
         private const string MsAccessClassName = "OMAIN";
 

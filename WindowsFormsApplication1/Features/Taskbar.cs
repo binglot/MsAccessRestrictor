@@ -8,9 +8,9 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using WindowsFormsApplication1.Interfaces;
+using MsAccessRestrictor.Interfaces;
 
-namespace WindowsFormsApplication1.Features {
+namespace MsAccessRestrictor.Features {
     /// <summary>
     /// Helper class for hiding/showing the taskbar and startmenu on
     /// Windows XP and Vista.

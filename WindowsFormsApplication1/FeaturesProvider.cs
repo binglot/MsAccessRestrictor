@@ -1,15 +1,15 @@
 using System.Collections.Generic;
-using WindowsFormsApplication1.Features;
-using WindowsFormsApplication1.Interfaces;
+using MsAccessRestrictor.Features;
+using MsAccessRestrictor.Interfaces;
 
-namespace WindowsFormsApplication1 {
+namespace MsAccessRestrictor {
     public class FeaturesProvider : IFeaturesProvider {
         public IEnumerable<IFeature> GetFeatures() {
-            yield return new CtrlAltDelete();
+            //yield return new CtrlAltDelete();
             yield return new KeyboardHooking();
-            yield return new Taskbar();
-            yield return new WindowFocus();
-            yield return new WindowButtons();
+            //yield return new Taskbar();
+            //yield return new WindowFocus();
+            //yield return new WindowButtons();
         }
     }
 }

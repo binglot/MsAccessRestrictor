@@ -1,8 +1,8 @@
 using System;
 using System.Text;
-using WindowsFormsApplication1.Interfaces;
+using MsAccessRestrictor.Interfaces;
 
-namespace WindowsFormsApplication1.Features {
+namespace MsAccessRestrictor.Features {
     public class WindowButtons : IFeature {
         private readonly IntPtr _windowHandle;
 

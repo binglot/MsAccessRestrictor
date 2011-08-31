@@ -2,8 +2,12 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace WindowsFormsApplication1 {
+namespace MsAccessRestrictor {
     static class WinApi {
+        //
+        // API Calls
+        //
+
         //
         [DllImport("user32.dll", EntryPoint = "GetSystemMenu")]
         public static extern IntPtr GetSystemMenu(IntPtr hwnd, int revert);
@@ -28,5 +32,29 @@ namespace WindowsFormsApplication1 {
         // Return window's handle
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        //
+        [DllImport("user32", EntryPoint = "SetWindowsHookExA", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
+        public static extern int SetWindowsHookEx(int idHook, LowLevelKeyboardProcDelegate lpfn, int hMod, int dwThreadId);
+        //
+        [DllImport("user32", EntryPoint = "UnhookWindowsHookEx", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
+        public static extern int UnhookWindowsHookEx(int hHook);
+        public delegate int LowLevelKeyboardProcDelegate(int nCode, int wParam, ref HookStruct lParam);
+        //
+        [DllImport("user32", EntryPoint = "CallNextHookEx", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
+        public static extern int CallNextHookEx(int hHook, int nCode, int wParam, ref HookStruct lParam);
+
+        //
+        // Structs
+        //
+
+        #pragma warning disable 649, 169
+        public struct HookStruct {
+            public int VkCode;
+            private int _scanCode;
+            public int Flags;
+            private int _time;
+            private int _dwExtraInfo;
+        }
+        #pragma warning restore 649, 169
     }
 }

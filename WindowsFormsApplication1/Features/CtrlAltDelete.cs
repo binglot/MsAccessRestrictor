@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Diagnostics;
 using Microsoft.Win32;
-using WindowsFormsApplication1.Interfaces;
+using MsAccessRestrictor.Interfaces;
 
-namespace WindowsFormsApplication1.Features {
+namespace MsAccessRestrictor.Features {
     class CtrlAltDelete : IFeature {
-        readonly RegistryKey _currentUser = Registry.CurrentUser;
-        const string SubKey = @"Software\Microsoft\Windows\CurrentVersion\Policies\System";
-        const string Value = "DisableTaskMgr";
+        readonly RegistryKey _registry = Registry.CurrentUser;
+        const bool WritableRegistry = true;
+        const string RegistryBranch = @"Software\Microsoft\Windows\CurrentVersion\Policies\System";
+        const string Key = "DisableTaskMgr";
 
         public void Run() {
             DisableCtrlAltDelete(true);
@@ -17,24 +18,31 @@ namespace WindowsFormsApplication1.Features {
             DisableCtrlAltDelete(false);
         }
 
-        private void DisableCtrlAltDelete(bool value) {
-            int keyValue = value ? 1 : 0;
+        private void DisableCtrlAltDelete(bool disable) {
+            var keyValue = disable ? 1 : 0;
 
             try {
-                RegistryKey sk1 = _currentUser.OpenSubKey(SubKey, true);
+                var registryKey = GetRegistryKey() ?? CreateRegistryKey();
 
-                if (sk1 == null) {
-                    _currentUser.CreateSubKey(SubKey);
-                    sk1 = _currentUser.OpenSubKey(SubKey, true);
+                if (registryKey != null) {
+                    registryKey.SetValue(Key, keyValue);
                 }
-
-                if (sk1 != null) {
-                    sk1.SetValue(Value, keyValue);
+                else {
+                    Debug.WriteLine("There was a problem writing to the registry.");
                 }
             }
             catch (Exception ex) {
-                MessageBox.Show(@"Exception: " + ex.Message);
+                Debug.WriteLine(@"Exception: " + ex.Message);
             }
+        }
+
+        private RegistryKey CreateRegistryKey() {
+            _registry.CreateSubKey(RegistryBranch);
+            return GetRegistryKey();
+        }
+
+        private RegistryKey GetRegistryKey() {
+            return _registry.OpenSubKey(RegistryBranch, WritableRegistry);
         }
     }
 }

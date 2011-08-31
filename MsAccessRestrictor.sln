@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsAccessRestrictor", "WindowsFormsApplication1\MsAccessRestrictor.csproj", "{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
