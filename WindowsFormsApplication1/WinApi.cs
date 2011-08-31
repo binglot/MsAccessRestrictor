@@ -44,6 +44,26 @@ namespace MsAccessRestrictor {
         public static extern int CallNextHookEx(int hHook, int nCode, int wParam, ref HookStruct lParam);
 
         //
+        // Overloads on WinAPI methods
+        //
+
+        // Sets focus on a window and makes it always on top
+        public static void SetTopMostWindow(IntPtr window, bool enable) {
+            SetWindowPos(window, enable ? HWND_TOPMOST : HWND_NOTOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
+            SetForegroundWindow(window);
+        }
+
+        //
+        // Constants
+        //
+
+        static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+        const UInt32 SWP_NOSIZE = 0x0001;
+        const UInt32 SWP_NOMOVE = 0x0002;
+        const UInt32 TOPMOST_FLAGS = SWP_NOMOVE | SWP_NOSIZE;
+
+        //
         // Structs
         //
 
