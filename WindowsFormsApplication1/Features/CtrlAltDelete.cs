@@ -5,11 +5,11 @@ using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor.Features {
     class CtrlAltDelete : IFeature {
-        readonly RegistryKey _registry = Registry.CurrentUser;
         const bool WritableRegistry = true;
         const string RegistryBranch = @"Software\Microsoft\Windows\CurrentVersion\Policies\System";
         const string Key = "DisableTaskMgr";
-
+        readonly RegistryKey _registry = Registry.CurrentUser;
+        
         public void Run() {
             DisableCtrlAltDelete(true);
         }

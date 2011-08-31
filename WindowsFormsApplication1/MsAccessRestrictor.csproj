@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="FeaturesManager.cs" />
     <Compile Include="FeaturesProvider.cs" />
+    <Compile Include="Interfaces\IPasswordForm.cs" />
     <Compile Include="Features\WindowButtons.cs" />
     <Compile Include="Features\CtrlAltDelete.cs" />
     <Compile Include="Features\Taskbar.cs" />

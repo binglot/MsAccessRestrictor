@@ -5,11 +5,9 @@ using MsAccessRestrictor.Interfaces;
 namespace MsAccessRestrictor {
     public partial class MainForm : Form {
         private readonly IFeaturesManager _features;
-        public static MainForm Instance;
 
         public MainForm(IFeaturesManager features) {
             _features = features;
-            Instance = this;
             InitializeComponent();
         }
 

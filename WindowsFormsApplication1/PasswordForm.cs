@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
+using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor {
-    public partial class PasswordForm : Form {
+    public partial class PasswordForm : Form, IPasswordForm {
         
         public PasswordForm() {
             InitializeComponent();
@@ -18,10 +19,20 @@ namespace MsAccessRestrictor {
         }
 
         private void txtPassword_KeyUp(object sender, KeyEventArgs e) {
+            e.Handled = true;
+
             if (e.KeyData == Keys.Enter)
             {
-                button1_Click(null, null);
+                button1_Click(sender, e);
             }
+        }
+
+        new DialogResult ShowDialog() {
+            Password = String.Empty;
+            TopMost = true;
+            TopLevel = true;
+            
+            return base.ShowDialog();
         }
     }
 }
