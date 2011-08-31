@@ -4,9 +4,11 @@ using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor {
     public partial class PasswordForm : Form, IPasswordForm {
-        
+
         public PasswordForm() {
             InitializeComponent();
+            Shown += delegate { SetTopMostWindow(true); };
+            Closing += delegate { SetTopMostWindow(false); };
         }
 
         public string Password {
@@ -18,21 +20,20 @@ namespace MsAccessRestrictor {
             Close();
         }
 
-        private void txtPassword_KeyUp(object sender, KeyEventArgs e) {
-            e.Handled = true;
-
-            if (e.KeyData == Keys.Enter)
-            {
-                button1_Click(sender, e);
-            }
-        }
-
-        new DialogResult ShowDialog() {
+        public new DialogResult ShowDialog() {
             Password = String.Empty;
-            TopMost = true;
-            TopLevel = true;
-            
             return base.ShowDialog();
         }
+
+        private void SetTopMostWindow(bool enable) {
+            WinApi.SetWindowPos(this.Handle, enable ? HWND_TOPMOST : HWND_NOTOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
+            WinApi.SetForegroundWindow(this.Handle);
+        }
+
+        static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+        const UInt32 SWP_NOSIZE = 0x0001;
+        const UInt32 SWP_NOMOVE = 0x0002;
+        const UInt32 TOPMOST_FLAGS = SWP_NOMOVE | SWP_NOSIZE;
     }
 }
