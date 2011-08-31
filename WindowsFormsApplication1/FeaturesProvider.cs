@@ -8,7 +8,7 @@ namespace MsAccessRestrictor {
             //yield return new CtrlAltDelete();
             yield return new KeyboardHooking();
             //yield return new Taskbar();
-            //yield return new WindowFocus();
+            yield return new WindowFocus();
             //yield return new WindowButtons();
         }
     }

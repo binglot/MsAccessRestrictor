@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using MsAccessRestrictor.Forms;
 
 namespace MsAccessRestrictor {
     static class Program {
