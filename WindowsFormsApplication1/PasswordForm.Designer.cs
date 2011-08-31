@@ -30,16 +30,17 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(63, 26);
+            this.txtPassword.Location = new System.Drawing.Point(63, 20);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(143, 20);
             this.txtPassword.TabIndex = 0;
+            this.txtPassword.WordWrap = false;
             // 
             // lblPassword
             // 
             this.lblPassword.AutoSize = true;
-            this.lblPassword.Location = new System.Drawing.Point(4, 29);
+            this.lblPassword.Location = new System.Drawing.Point(4, 23);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(53, 13);
             this.lblPassword.TabIndex = 1;
@@ -54,7 +55,7 @@
             this.btnOk.TabIndex = 2;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.button1_Click);
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // PasswordForm
             // 
@@ -62,12 +63,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(216, 87);
-            this.ControlBox = false;
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.txtPassword);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "PasswordForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Disable Password";
             this.ResumeLayout(false);
             this.PerformLayout();

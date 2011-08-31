@@ -16,7 +16,11 @@ namespace MsAccessRestrictor {
             set { txtPassword.Text = value; }
         }
 
-        private void button1_Click(object sender, EventArgs e) {
+        private void btnOk_Click(object sender, EventArgs e) {
+            Close();
+        }
+
+        private void btnClose_Click(object sender, EventArgs e) {
             Close();
         }
 
