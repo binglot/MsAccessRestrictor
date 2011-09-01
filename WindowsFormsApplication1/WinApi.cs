@@ -45,7 +45,7 @@ namespace MsAccessRestrictor {
         //
         [DllImport("user32.dll")]
         public static extern int ShowWindow(IntPtr hWnd, int nCmdShow);
-        //
+        // Return if an application is minimized
         [DllImport("user32.dll")]
         public static extern bool IsIconic(IntPtr hWnd);
 

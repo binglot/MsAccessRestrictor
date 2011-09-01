@@ -56,18 +56,18 @@
     <Compile Include="Features\Taskbar.cs" />
     <Compile Include="Features\WindowFocus.cs" />
     <Compile Include="Interfaces\IFeaturesManager.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IFeaturesProvider.cs" />
     <Compile Include="Interfaces\IFeature.cs" />
-    <Compile Include="PasswordForm.cs">
+    <Compile Include="Forms\PasswordForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PasswordForm.Designer.cs">
+    <Compile Include="Forms\PasswordForm.Designer.cs">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -75,10 +75,10 @@
     <Compile Include="Features\KeyboardHooking.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="WinApi.cs" />
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PasswordForm.resx">
+    <EmbeddedResource Include="Forms\PasswordForm.resx">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

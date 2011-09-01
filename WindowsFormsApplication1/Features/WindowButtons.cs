@@ -26,8 +26,7 @@ namespace MsAccessRestrictor.Features {
         const int MF_BYCOMMAND = 0x00000000;
         //const UInt32 MF_DISABLED = 0x00000002;
 
-        // needs changing! can't be hard-coded
-        readonly UIntPtr[] _originalButtonIds = new UIntPtr[8];
+        private UIntPtr[] _originalButtonIds;
 
         public void DisableButtons(IntPtr window) {
             EnableMenuButtons(window, false);
@@ -42,6 +41,7 @@ namespace MsAccessRestrictor.Features {
             var systemMenu = WinApi.GetSystemMenu(window, 0);
             var flags = MF_BYCOMMAND | (enabled ? MF_ENABLED : MF_GRAYED);
             var itemsCount = WinApi.GetMenuItemCount(systemMenu);
+            _originalButtonIds = new UIntPtr[itemsCount];
 
             if (itemsCount > 0) {
                 for (int i = itemsCount - 1; i >= 0; i--) {

@@ -9,6 +9,7 @@ namespace MsAccessRestrictor.Features {
         const string PasswordString = "dupa";
         const int KeyboardWindowHandler = 13;
         readonly IPasswordForm _passwordForm;
+        readonly object _locker = new object();
         readonly int _instance;
         static bool _passwordDialogIsOpen;
         int _hookId;
@@ -64,11 +65,14 @@ namespace MsAccessRestrictor.Features {
         }
 
         private void PasswordDialog() {
-            if (_passwordDialogIsOpen) {
-                return;
+            lock (_locker) {
+                if (_passwordDialogIsOpen) {
+                    return;
+                }
+
+                _passwordDialogIsOpen = true;
             }
 
-            _passwordDialogIsOpen = true;
             Task.Factory.StartNew(ShowPasswordDialog); // to avoid thread's hiccups
         }
 
@@ -79,7 +83,9 @@ namespace MsAccessRestrictor.Features {
                 }
             }
 
-            _passwordDialogIsOpen = false;
+            lock (_locker) {
+                _passwordDialogIsOpen = false;
+            }
         }
     }
 }
