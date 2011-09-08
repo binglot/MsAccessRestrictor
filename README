@@ -1,0 +1,15 @@
+It's a C# project written specificaly for Microsoft Windows as a favour for a friend of mine.
+
+Description
+
+The application aims at raising productivity at work for those working with Microsoft Access by disabling certain features of Microsoft Windows (e.g. blocking certain keyboard shortcuts and disabling taskbar) and it lets re-enable them by entering the correct password.
+
+To do
+
+- Write unit tests.
+- Check if there is no instance of MsAccess running and if so then alert and stop executing.
+- Disable more shortcuts - e.g. Ctrl+O (Open File).
+- Disable spawning new processes from within MsAccess (e.g. by using the Open File dialog).
+- Document native WinAPI methods (P/Invoke).
+- Fix: the Restore button doesn't re-enable.
+- Write a documentation.
