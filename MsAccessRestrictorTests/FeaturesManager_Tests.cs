@@ -1,73 +1,77 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq.Expressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MsAccessRestrictor;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictorTests {
     [TestClass]
     public class FeaturesManager_Tests {
-        private Mock<IFeaturesProvider> _mockProvider;
+        private Mock<IFeaturesProvider> _mockFeaturesProvider;
 
         [TestInitialize]
         public void Initialize() {
-            var featuresList = new List<IFeature>();
-            _mockProvider = new Mock<IFeaturesProvider>();
-
-            _mockProvider.Setup(p => p.GetFeatures()).Returns(featuresList);
+            _mockFeaturesProvider = new Mock<IFeaturesProvider>();
         }
 
         [TestCleanup]
         public void Cleanup() {
-            _mockProvider.Verify();
+            _mockFeaturesProvider.Verify();
         }
 
         [TestMethod]
-        public void Gets_features_from_a_feature_provider() {
-            new FeaturesManager(_mockProvider.Object);
+        public void Get_features_from_a_feature_provider() {
+            var featuresList = new List<IFeature>();
+
+            _mockFeaturesProvider.Setup(p => p.GetFeatures()).Returns(featuresList);
+
+            new FeaturesManager(_mockFeaturesProvider.Object);
         }
 
         [TestMethod]
-        public void Enables_all_the_features() {
-            var mockFeature1 = new Mock<IFeature>();
-            var mockFeature2 = new Mock<IFeature>();
-            var mockFeature3 = new Mock<IFeature>();
-            var featuresList = new List<IFeature> { mockFeature1.Object, mockFeature2.Object, mockFeature3.Object };
+        public void Enable_all_the_features() {
+            RunOnAll(feature => feature.Run());
+        }
 
-            _mockProvider.Setup(p => p.GetFeatures()).Returns(featuresList);
-            mockFeature1.Setup(f => f.Run());
-            mockFeature2.Setup(f => f.Run());
-            mockFeature3.Setup(f => f.Run());
+        [TestMethod]
+        public void Disable_all_the_features() {
+            RunOnAll(feature => feature.Clear());
+        }
 
-            var manager = new FeaturesManager(_mockProvider.Object);
+        void RunOnAll(Expression<Action<IFeature>> action) {
+            var mockFeaturesList = GetMockFeaturesList();
+            var featuresList = mockFeaturesList.ConvertAll(f => f.Object);
+
+            SetUpMockFeatures(mockFeaturesList, action);
+            _mockFeaturesProvider.Setup(p => p.GetFeatures()).Returns(featuresList);
+
+            var manager = new FeaturesManager(_mockFeaturesProvider.Object);
             manager.SetAll();
 
-            mockFeature1.Verify();
-            mockFeature2.Verify();
-            mockFeature3.Verify();
+            VerifyMockFeatures(mockFeaturesList);
         }
 
-        [TestMethod]
-        public void Disables_all_the_features() {
+        static List<Mock<IFeature>> GetMockFeaturesList() {
             var mockFeature1 = new Mock<IFeature>();
             var mockFeature2 = new Mock<IFeature>();
             var mockFeature3 = new Mock<IFeature>();
-            var featuresList = new List<IFeature> { mockFeature1.Object, mockFeature2.Object, mockFeature3.Object };
+            var mocksList = new List<Mock<IFeature>> { mockFeature1, mockFeature2, mockFeature3 };
 
-            _mockProvider.Setup(p => p.GetFeatures()).Returns(featuresList);
-            mockFeature1.Setup(f => f.Clear());
-            mockFeature2.Setup(f => f.Clear());
-            mockFeature3.Setup(f => f.Clear());
+            return mocksList;
+        }
 
-            var manager = new FeaturesManager(_mockProvider.Object);
-            manager.ClearAll();
+        static void SetUpMockFeatures(IEnumerable<Mock<IFeature>> features, Expression<Action<IFeature>> action) {
+            foreach (var feature in features) {
+                feature.Setup(action);
+            }
+        }
 
-            mockFeature1.Verify();
-            mockFeature2.Verify();
-            mockFeature3.Verify();
+        static void VerifyMockFeatures(IEnumerable<Mock<IFeature>> featuresList) {
+            foreach (var feature in featuresList) {
+                feature.Verify();
+            }
         }
     }
 }
