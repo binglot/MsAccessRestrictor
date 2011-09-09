@@ -15,7 +15,7 @@ namespace MsAccessRestrictor.Features {
     /// Helper class for hiding/showing the taskbar and startmenu on
     /// Windows XP and Vista.
     /// </summary>
-    public class Taskbar : IFeature {
+    class Taskbar : IFeature {
         [DllImport("user32.dll")]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
         [DllImport("user32.dll", CharSet = CharSet.Auto)]

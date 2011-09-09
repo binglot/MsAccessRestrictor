@@ -5,7 +5,7 @@ using MsAccessRestrictor.Forms;
 using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor.Features {
-    public class KeyboardHooking : IFeature {
+    class KeyboardHooking : IFeature {
         const string PasswordString = "dupa";
         const int KeyboardWindowHandler = 13;
         readonly IPasswordForm _passwordForm;

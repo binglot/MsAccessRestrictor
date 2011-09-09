@@ -2,7 +2,7 @@ using System;
 using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor.Features {
-    public class WindowFocus : IFeature {
+    class WindowFocus : IFeature {
         private const int SW_MAXIMIZE = 3;
         private const int SW_RESTORE = 9;
         private readonly IntPtr _windowHandle;

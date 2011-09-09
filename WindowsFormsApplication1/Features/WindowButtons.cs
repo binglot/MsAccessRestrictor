@@ -3,7 +3,7 @@ using System.Text;
 using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor.Features {
-    public class WindowButtons : IFeature {
+    class WindowButtons : IFeature {
         private readonly IntPtr _windowHandle;
 
         public WindowButtons() {

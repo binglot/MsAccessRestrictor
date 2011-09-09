@@ -9,10 +9,10 @@ using MsAccessRestrictor.Interfaces;
 namespace MsAccessRestrictorTests {
     [TestClass]
     public class FeaturesManager_Tests {
-        private Mock<IFeaturesProvider> _mockFeaturesProvider;
+        Mock<IFeaturesProvider> _mockFeaturesProvider;
 
         [TestInitialize]
-        public void Initialize() {
+        public void Setup() {
             _mockFeaturesProvider = new Mock<IFeaturesProvider>();
         }
 
@@ -22,7 +22,7 @@ namespace MsAccessRestrictorTests {
         }
 
         [TestMethod]
-        public void Get_features_from_a_feature_provider() {
+        public void Instantiating_gets_features_from_a_feature_provider() {
             var featuresList = new List<IFeature>();
 
             _mockFeaturesProvider.Setup(p => p.GetFeatures()).Returns(featuresList);
@@ -31,12 +31,12 @@ namespace MsAccessRestrictorTests {
         }
 
         [TestMethod]
-        public void Enable_all_the_features() {
+        public void Enabling_the_features_runs_the_Run_method_on_all_of_them() {
             RunOnAllFeatures(feature => feature.Run());
         }
 
         [TestMethod]
-        public void Disable_all_the_features() {
+        public void Disabling_the_features_runs_the_Clear_method_on_all_of_them() {
             RunOnAllFeatures(feature => feature.Clear());
         }
 
