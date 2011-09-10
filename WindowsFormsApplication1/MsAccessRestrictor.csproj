@@ -54,7 +54,7 @@
     <Compile Include="Interfaces\IPasswordForm.cs" />
     <Compile Include="Features\WindowButtons.cs" />
     <Compile Include="Features\CtrlAltDelete.cs" />
-    <Compile Include="Features\Taskbar.cs" />
+    <Compile Include="Features\HideTaskbar.cs" />
     <Compile Include="Features\WindowFocus.cs" />
     <Compile Include="Interfaces\IFeaturesManager.cs" />
     <Compile Include="Forms\MainForm.cs">
