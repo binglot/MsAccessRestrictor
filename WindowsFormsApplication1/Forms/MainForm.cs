@@ -17,6 +17,7 @@ namespace MsAccessRestrictor.Forms {
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
             _features.ClearAll();
+            _features.Dispose();
         }
     }
 }

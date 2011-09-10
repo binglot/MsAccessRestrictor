@@ -4,7 +4,7 @@ using System.Linq;
 using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor {
-    public class FeaturesManager : IFeaturesManager {
+    public class FeaturesManager : IFeaturesManager, IDisposable {
         private readonly List<IFeature> _features;
 
         public FeaturesManager() : this(new FeaturesProvider()) {}
@@ -24,6 +24,10 @@ namespace MsAccessRestrictor {
 
         void DisposeAll() {
             _features.OfType<IDisposable>().ToList().ForEach(f => f.Dispose());
+        }
+
+        public void Dispose() {
+            DisposeAll();
         }
     }
 }
