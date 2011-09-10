@@ -3,9 +3,12 @@ using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor.Features {
     class WindowFocus : IFeature {
-        private const int SW_MAXIMIZE = 3;
-        private const int SW_RESTORE = 9;
         private readonly IntPtr _windowHandle;
+
+        enum WindowSetting {
+            Maximize = 3,
+            Restore = 9
+        }
 
         public WindowFocus() {
             _windowHandle = Utils.GetMsAccessWindowHandle();
@@ -25,12 +28,12 @@ namespace MsAccessRestrictor.Features {
         }
 
         private static void RestoreAndMaximize(IntPtr window) {
-            // If the window is minimized then won't become always top without this.
+            // If the window is minimized then it won't become "always on top" so it needs restoring.
             if (WinApi.IsIconic(window)) {
-                WinApi.ShowWindow(window, SW_RESTORE);
+                WinApi.ShowWindow(window, (int)WindowSetting.Restore);
             }
-            
-            WinApi.ShowWindow(window, SW_MAXIMIZE);
+
+            WinApi.ShowWindow(window, (int)WindowSetting.Maximize);
         }
 
         public static void MakeNormal(IntPtr window) {

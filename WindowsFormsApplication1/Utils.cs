@@ -2,7 +2,7 @@
 
 namespace MsAccessRestrictor {
     static class Utils {
-        private const string MsAccessClassName = "OMAIN";
+        const string MsAccessClassName = "OMAIN";
 
         public static IntPtr GetMsAccessWindowHandle() {
             return WinApi.FindWindow(MsAccessClassName, null);
@@ -14,9 +14,12 @@ namespace MsAccessRestrictor {
             WinApi.SetForegroundWindow(window);
         }
 
+        
+        
         //
-        // Constants
+        // WinAPI Constants
         //
+
         // ReSharper disable InconsistentNaming
         static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
         static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);

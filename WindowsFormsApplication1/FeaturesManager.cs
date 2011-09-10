@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MsAccessRestrictor.Interfaces;
 
@@ -18,6 +19,11 @@ namespace MsAccessRestrictor {
         
         public void ClearAll() {
             _features.ForEach(f => f.Clear());
+            DisposeAll();
+        }
+
+        void DisposeAll() {
+            _features.OfType<IDisposable>().ToList().ForEach(f => f.Dispose());
         }
     }
 }
