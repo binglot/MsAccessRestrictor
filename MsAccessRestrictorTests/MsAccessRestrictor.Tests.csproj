@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FeaturesProvider_Tests.cs" />
+    <Compile Include="Features\CtrlAltDelete_Tests.cs" />
+    <Compile Include="Features\KeyboardHooking_Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FeaturesManager_Tests.cs" />
   </ItemGroup>

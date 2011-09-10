@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MsAccessRestrictor.Forms;
@@ -8,6 +9,8 @@ namespace MsAccessRestrictor.Features {
     class KeyboardHooking : IFeature {
         const string PasswordString = "dupa";
         const int KeyboardWindowHandler = 13;
+        const int ThreadId = 0;
+
         readonly IPasswordForm _passwordForm;
         readonly object _locker = new object();
         readonly int _instance;
@@ -19,11 +22,12 @@ namespace MsAccessRestrictor.Features {
 
         public KeyboardHooking(IPasswordForm passwordForm) {
             _passwordForm = passwordForm;
-            _instance = Marshal.GetHINSTANCE(System.Reflection.Assembly.GetExecutingAssembly().GetModules()[0]).ToInt32();
+            _instance = Marshal.GetHINSTANCE(Assembly.GetExecutingAssembly().GetModules()[0]).ToInt32();
         }
 
         public void Run() {
             _hookId = HookWindowsKeyboard(KeyboardProcessor, _instance);
+            PasswordDialog();
         }
 
         public void Clear() {
@@ -31,7 +35,7 @@ namespace MsAccessRestrictor.Features {
         }
 
         private static int HookWindowsKeyboard(WinApi.LowLevelKeyboardProcDelegate handler, int instance) {
-            return WinApi.SetWindowsHookEx(KeyboardWindowHandler, handler, instance, 0);
+            return WinApi.SetWindowsHookEx(KeyboardWindowHandler, handler, instance, ThreadId);
         }
 
         private static void UnhookWindowsKeyboard(int hookId) {
@@ -39,29 +43,29 @@ namespace MsAccessRestrictor.Features {
         }
 
         private int KeyboardProcessor(int nCode, int wParam, ref WinApi.HookStruct lParam) {
-            var foundShortcut = false;
+            var shortcutPressed = false;
 
             switch (wParam) {
                 case 256:
                 case 257:
                 case 260:
                 case 261:
-                    if (wParam == 260 && (lParam.Flags == 32) && (lParam.VkCode == 0x7B)) { // Alt+F12
+                    if (wParam == 260 && (lParam.Flags == 32) && (lParam.VkCode == 0x7B)) {  // Alt+F12
                         PasswordDialog();
                     }
 
-                    foundShortcut = ((lParam.Flags == 32) && (lParam.VkCode == 0x09)) ||    // Alt+Tab
-                        ((lParam.Flags == 32) && (lParam.VkCode == 0x1B)) ||                // Alt+Esc
-                        ((lParam.Flags == 0) && (lParam.VkCode == 0x1B)) ||                 // Ctrl+Esc
-                        ((lParam.Flags == 1) && (lParam.VkCode == 0x5B)) ||                 // Left Windows Key
-                        ((lParam.Flags == 1) && (lParam.VkCode == 0x5C)) ||                 // Right Windows Key
-                        ((lParam.Flags == 32) && (lParam.VkCode == 0x73)) ||                // Alt+F4              
-                        ((lParam.Flags == 32) && (lParam.VkCode == 0x20));                  // Alt+Space
+                    shortcutPressed = ((lParam.Flags == 32) && (lParam.VkCode == 0x09)) ||   // Alt+Tab
+                        ((lParam.Flags == 32) && (lParam.VkCode == 0x1B)) ||                 // Alt+Esc
+                        ((lParam.Flags == 0) && (lParam.VkCode == 0x1B))  ||                 // Ctrl+Esc
+                        ((lParam.Flags == 1) && (lParam.VkCode == 0x5B))  ||                 // Left Windows Key
+                        ((lParam.Flags == 1) && (lParam.VkCode == 0x5C))  ||                 // Right Windows Key
+                        ((lParam.Flags == 32) && (lParam.VkCode == 0x73)) ||                 // Alt+F4              
+                        ((lParam.Flags == 32) && (lParam.VkCode == 0x20));                   // Alt+Space
 
                     break;
             }
 
-            return foundShortcut ? 1 : WinApi.CallNextHookEx(0, nCode, wParam, ref lParam);
+            return shortcutPressed ? 1 : WinApi.CallNextHookEx(0, nCode, wParam, ref lParam);
         }
 
         private void PasswordDialog() {

@@ -25,16 +25,26 @@ namespace MsAccessRestrictorTests {
             var featuresTypeList = GetFeaturesTypeNames();
             var featuresList = _featuresProvider.GetFeatures();
 
-            foreach (var feature in featuresList.Select(feature => feature.GetType()))
-            {
-                Assert.IsTrue(featuresTypeList.Contains(feature));
+            Assert.AreEqual(featuresTypeList.Count(), featuresList.Count(), "The number of features doesn't match.");
+
+            foreach (var feature in featuresList.Select(feature => feature.GetType())) {
+                var shortName = GetFeaturesShortName(feature);
+                Assert.IsTrue(featuresTypeList.Contains(feature), String.Format("Missing the feature: {0}", shortName));
             }
+        }
+
+        private static string GetFeaturesShortName(Type feature) {
+            var featuresName = feature.ToString();
+            var lastDot = featuresName.LastIndexOf('.');
+            var shortName = featuresName.Substring(lastDot + 1);
+            
+            return shortName;
         }
 
         static IEnumerable<Type> GetFeaturesTypeNames() {
             yield return typeof(CtrlAltDelete);
             yield return typeof(KeyboardHooking);
-            yield return typeof(Taskbar);
+            yield return typeof(HideTaskbar);
             yield return typeof(WindowFocus);
             yield return typeof(WindowButtons);
         }
