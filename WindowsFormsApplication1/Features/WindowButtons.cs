@@ -3,74 +3,94 @@ using System.Text;
 using MsAccessRestrictor.Interfaces;
 
 namespace MsAccessRestrictor.Features {
-    class WindowButtons : IFeature {
-        private readonly IntPtr _windowHandle;
+    internal class WindowButtons : IFeature {
+        readonly IntPtr _msAccessWindow;
+        UIntPtr[] _originalButtonIds;
+
+        enum ButtonOption : uint {
+            Enabled = 0,
+            Grayed = 1
+        }
+
+        enum MenuOption {
+            GetByCommand = 0,
+            GetByPosition = 1024,
+        }
 
         public WindowButtons() {
-            _windowHandle = Utils.GetMsAccessWindowHandle();
+            _msAccessWindow = Utils.GetMsAccessWindowHandle();
         }
 
         public void Run() {
-            DisableButtons(_windowHandle);
+            SetWindowMenuButtons(_msAccessWindow, ButtonOption.Grayed);
         }
 
         public void Clear() {
-            EnableButtons(_windowHandle);
+            SetWindowMenuButtons(_msAccessWindow, ButtonOption.Enabled);
         }
 
-        #region Implementation Details
+        void SetWindowMenuButtons(IntPtr window, ButtonOption buttonFlag) {
+            // Find all the buttons on the window's menu
+            var windowMenu = GetSystemMenu(window);
+            var itemsCount = WinApi.GetMenuItemCount(windowMenu);
 
-        const UInt32 MF_ENABLED = 0x00000000;
-        const UInt32 MF_GRAYED = 0x00000001;
-        const int MF_BYPOSITION = 0x00000400;
-        const int MF_BYCOMMAND = 0x00000000;
-        //const UInt32 MF_DISABLED = 0x00000002;
+            if (itemsCount == 0) {
+                return;
+            }
 
-        private UIntPtr[] _originalButtonIds;
+            if (_originalButtonIds == null) {
+                _originalButtonIds = new UIntPtr[itemsCount];
+            }
 
-        public void DisableButtons(IntPtr window) {
-            EnableMenuButtons(window, false);
-        }
+            // Modify each button
+            for (var position = 0; position < itemsCount; position++) {
+                uint sourceId;
+                UIntPtr destId;
 
-        public void EnableButtons(IntPtr window) {
-            EnableMenuButtons(window, true);
-        }
-
-        void EnableMenuButtons(IntPtr window, bool enabled) {
-            var label = new StringBuilder();
-            var systemMenu = WinApi.GetSystemMenu(window, 0);
-            var flags = MF_BYCOMMAND | (enabled ? MF_ENABLED : MF_GRAYED);
-            var itemsCount = WinApi.GetMenuItemCount(systemMenu);
-            _originalButtonIds = new UIntPtr[itemsCount];
-
-            if (itemsCount > 0) {
-                for (int i = itemsCount - 1; i >= 0; i--) {
-                    WinApi.GetMenuString(systemMenu, (uint)i, label, label.Capacity, MF_BYPOSITION);
-
-                    // To skip the menu separator
-                    if (label.ToString() == "") {
-                        continue;
-                    }
-
-                    uint sourceId;
-                    UIntPtr destId;
-
-                    if (enabled) {
-                        sourceId = UInt32.MaxValue - (uint)i;
-                        destId = _originalButtonIds[i];
-                    }
-                    else {
-                        var id = WinApi.GetMenuItemID(systemMenu, i);
-                        _originalButtonIds[i] = id;
-                        sourceId = id.ToUInt32();
-                        destId = new UIntPtr(UInt32.MaxValue - (uint)i);
-                    }
-
-                    WinApi.ModifyMenu(systemMenu, sourceId, flags, destId, label.ToString());
+                // Swap source and destination IDs to turn it on/off
+                switch (buttonFlag) {
+                    case ButtonOption.Enabled:
+                        sourceId = UInt32.MaxValue - (uint)position;
+                        destId = _originalButtonIds[position];
+                        break;
+                    case ButtonOption.Grayed:
+                        sourceId = (uint)WinApi.GetMenuItemID(windowMenu, position);
+                        destId = new UIntPtr(UInt32.MaxValue - (uint)position);
+                        RetainOriginalButtonId(position, sourceId);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("buttonFlag");
                 }
+
+                ModifyMenu(position, sourceId, destId, windowMenu, buttonFlag);
             }
         }
 
-        #endregion
+        static IntPtr GetSystemMenu(IntPtr window) {
+            return WinApi.GetSystemMenu(window, 0);
+        }
+
+        private void RetainOriginalButtonId(int position, uint buttonId) {
+            _originalButtonIds[position] = new UIntPtr(buttonId);
+        }
+
+        private static string GetButtonLabel(int itemId, IntPtr systemMenu) {
+            var label = new StringBuilder();
+            WinApi.GetMenuString(systemMenu, (uint)itemId, label, label.Capacity, (uint)MenuOption.GetByPosition);
+            return label.ToString();
+        }
+
+        private static void ModifyMenu(int position, uint sourceId, UIntPtr destId, IntPtr windowMenu,
+            ButtonOption buttonFlag) {
+            var buttonLabel = GetButtonLabel(position, windowMenu);
+
+            // Skip the menu separator
+            if (buttonLabel == "") {
+                return;
+            }
+
+            var flags = (uint)MenuOption.GetByCommand | (uint)buttonFlag;
+            WinApi.ModifyMenu(windowMenu, sourceId, flags, destId, buttonLabel);
+        }
     }
 }
