@@ -6,7 +6,7 @@ namespace MsAccessRestrictor.Forms {
     public partial class PasswordForm : Form, IPasswordForm {
         public PasswordForm() {
             InitializeComponent();
-            Shown += delegate { SetTopMostWindow(true); };
+            Shown += delegate { SetTopMostWindow(true);  Refresh(); };
             Closing += delegate { SetTopMostWindow(false); };
         }
 
