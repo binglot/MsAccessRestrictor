@@ -10,6 +10,8 @@ namespace MsAccessRestrictor.Features {
     class KeyboardHooking : IFeature {
         const int KeyboardWindowHandler = 13;
         const int ThreadId = 0;
+        const int F1Key = 0x70;
+        const int F12Key = 0x7B;
 
         readonly IPasswordForm _passwordForm;
         readonly object _locker = new object();
@@ -17,7 +19,6 @@ namespace MsAccessRestrictor.Features {
         readonly int _instance;
         static bool _passwordDialogIsOpen;
         int _hookId;
-
 
         public KeyboardHooking() : this(new PasswordForm(), Settings.Default) { }
 
@@ -29,7 +30,6 @@ namespace MsAccessRestrictor.Features {
 
         public void Run() {
             _hookId = HookWindowsKeyboard(KeyboardProcessor, _instance);
-            //PasswordDialog();
         }
 
         public void Clear() {
@@ -52,23 +52,16 @@ namespace MsAccessRestrictor.Features {
                 case 257:
                 case 260:
                 case 261:
-                    if (wParam == 260 && (lParam.Flags == 32) && (lParam.VkCode == 0x7B)) {  // Alt+F12
+                    if (wParam == 260 && (lParam.Flags == 32) && (lParam.VkCode == F12Key)) {  // Alt+F12
                         PasswordDialog();
                     }
 
-                    shortcutPressed = ((lParam.Flags == 32) && (lParam.VkCode == 0x09)) ||   // Alt+Tab
-                        ((lParam.Flags == 32) && (lParam.VkCode == 0x1B)) ||                 // Alt+Esc
-                        //((lParam.Flags == 0)  && (lParam.VkCode == 0x1B)) ||                 // Ctrl+Esc
-                        ((lParam.Flags == 1)  && (lParam.VkCode == 0x5B)) ||                 // Left Windows Key
-                        ((lParam.Flags == 1)  && (lParam.VkCode == 0x5C)) ||                 // Right Windows Key
-                        ((lParam.Flags == 32) && (lParam.VkCode == 0x73)) ||                 // Alt+F4              
-                        ((lParam.Flags == 32) && (lParam.VkCode == 0x20)) ||                 // Alt+Space
-                        ((lParam.Flags == 128) && (lParam.VkCode == 0x4F));                   // Ctrl+O
-
-                    if (lParam.VkCode == 0x4F)
-                    {
-                        MessageBox.Show(lParam._scanCode.ToString());
-                    }
+                    shortcutPressed = (lParam.Flags == 32 && lParam.VkCode != F12Key) || // Alt but not with F12
+                                      ((lParam.Flags == 1) && (lParam.VkCode == 0x5B)) || // Left Windows Key
+                                      ((lParam.Flags == 1) && (lParam.VkCode == 0x5C)) || // Right Windows Key
+                                      ((lParam.Flags == 0) && (lParam.VkCode == 0xA2)) || // Left Control
+                                      ((lParam.Flags == 1) && (lParam.VkCode == 0xA3)) || // Right Control
+                                      ((lParam.Flags == 0) && (IsBetween(lParam.VkCode, F1Key, F12Key)));
 
                     break;
             }
@@ -98,6 +91,10 @@ namespace MsAccessRestrictor.Features {
             lock (_locker) {
                 _passwordDialogIsOpen = false;
             }
+        }
+
+        private bool IsBetween(int value, int left, int right) {
+            return value >= left && value <= right;
         }
     }
 }
