@@ -56,12 +56,12 @@ namespace MsAccessRestrictor.Features {
                         PasswordDialog();
                     }
 
-                    shortcutPressed = (lParam.Flags == 32 && lParam.VkCode != F12Key) || // Alt but not with F12
-                                      ((lParam.Flags == 1) && (lParam.VkCode == 0x5B)) || // Left Windows Key
-                                      ((lParam.Flags == 1) && (lParam.VkCode == 0x5C)) || // Right Windows Key
-                                      ((lParam.Flags == 0) && (lParam.VkCode == 0xA2)) || // Left Control
-                                      ((lParam.Flags == 1) && (lParam.VkCode == 0xA3)) || // Right Control
-                                      ((lParam.Flags == 0) && (IsBetween(lParam.VkCode, F1Key, F12Key)));
+                    shortcutPressed = PressedAlt(lParam) ||
+                                      PressedLeftWindowsKey(lParam) ||
+                                      PressedRightWindowsKey(lParam) ||
+                                      PressedLeftControl(lParam) ||
+                                      PressedRightControl(lParam) ||
+                                      PressedAnyOfF1ToF12(lParam);
 
                     break;
             }
@@ -93,8 +93,36 @@ namespace MsAccessRestrictor.Features {
             }
         }
 
-        private bool IsBetween(int value, int left, int right) {
+        private static bool IsBetween(int value, int left, int right) {
             return value >= left && value <= right;
         }
+
+        #region Key Presses
+
+        private static bool PressedAlt(WinApi.HookStruct lParam) {
+            return (lParam.Flags == 32 && lParam.VkCode != F12Key);
+        }
+
+        private static bool PressedLeftWindowsKey(WinApi.HookStruct lParam) {
+            return ((lParam.Flags == 1) && (lParam.VkCode == 0x5B));
+        }
+
+        private static bool PressedRightWindowsKey(WinApi.HookStruct lParam) {
+            return ((lParam.Flags == 1) && (lParam.VkCode == 0x5C));
+        }
+
+        private static bool PressedLeftControl(WinApi.HookStruct lParam) {
+            return ((lParam.Flags == 0) && (lParam.VkCode == 0xA2));
+        }
+
+        private static bool PressedRightControl(WinApi.HookStruct lParam) {
+            return ((lParam.Flags == 1) && (lParam.VkCode == 0xA3));
+        }
+
+        private bool PressedAnyOfF1ToF12(WinApi.HookStruct lParam) {
+            return ((lParam.Flags == 0) && (IsBetween(lParam.VkCode, F1Key, F12Key)));
+        }
+        
+        #endregion
     }
 }
