@@ -55,7 +55,7 @@ namespace MsAccessRestrictorTests {
 
         [TestMethod]
         public void Having_OpenMsAccess_set_to_false_and_more_than_one_running_MsAccess_throws_an_error() {
-            const string errorMessage = "Open MsAccess before running the application or change your settings.";
+            const string errorMessage = "Leave only one MsAccess window open before running the application or change your settings.";
             var processesNumber = new Random().Next(2, 10);
             const bool settingValue = false;
 
