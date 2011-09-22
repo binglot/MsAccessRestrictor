@@ -75,6 +75,7 @@
     <Compile Include="FeaturesProvider.cs" />
     <Compile Include="Features\MsAccessView.cs" />
     <Compile Include="Features\RunInsideLimitedJob.cs" />
+    <Compile Include="Interfaces\IMessage.cs" />
     <Compile Include="Interfaces\IPasswordForm.cs" />
     <Compile Include="Features\WindowButtons.cs" />
     <Compile Include="Features\CtrlAltDelete.cs" />
@@ -95,9 +96,13 @@
     <Compile Include="Forms\PasswordForm.Designer.cs">
       <DependentUpon>PasswordForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IProcess.cs" />
+    <Compile Include="Wrappers\MessageWriter.cs" />
+    <Compile Include="Wrappers\ProcessBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Features\KeyboardHooking.cs" />
+    <Compile Include="StartupChecker.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="WinApi.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">

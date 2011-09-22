@@ -13,7 +13,7 @@ namespace MsAccessRestrictor.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "10.0.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    public partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
         
@@ -35,7 +35,7 @@ namespace MsAccessRestrictor.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OpenMsAccess {
+        public virtual bool OpenMsAccess {
             get {
                 return ((bool)(this["OpenMsAccess"]));
             }
@@ -44,7 +44,7 @@ namespace MsAccessRestrictor.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool OpenDbFile {
+        public virtual bool OpenDbFile {
             get {
                 return ((bool)(this["OpenDbFile"]));
             }
@@ -53,7 +53,7 @@ namespace MsAccessRestrictor.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Files\\Database1.accdb")]
-        public string DbFilePath {
+        public virtual string DbFilePath {
             get {
                 return ((string)(this["DbFilePath"]));
             }
@@ -62,7 +62,7 @@ namespace MsAccessRestrictor.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DisableRibbon {
+        public virtual bool DisableRibbon {
             get {
                 return ((bool)(this["DisableRibbon"]));
             }
@@ -71,7 +71,7 @@ namespace MsAccessRestrictor.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DisableNavigationPane {
+        public virtual bool DisableNavigationPane {
             get {
                 return ((bool)(this["DisableNavigationPane"]));
             }
