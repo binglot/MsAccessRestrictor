@@ -14,7 +14,7 @@ namespace MsAccessRestrictorTests {
     public class StartupChecker_Tests {
         const string ProcessName = "MSACCESS";
         
-        StartupChecker _startupChecker;
+        StartUpChecker _startupChecker;
         Mock<Settings> _mockSettings;
         Mock<IMessageWriter> _mockMessageWriter;
         Mock<IProcess> _mockProcess;
@@ -25,7 +25,7 @@ namespace MsAccessRestrictorTests {
             _mockSettings = new Mock<Settings>();
             _mockMessageWriter = new Mock<IMessageWriter>();
             _mockProcess = new Mock<IProcess>();
-            _startupChecker = new StartupChecker(_mockSettings.Object, _mockMessageWriter.Object, _mockProcess.Object);
+            _startupChecker = new StartUpChecker(_mockSettings.Object, _mockMessageWriter.Object, _mockProcess.Object);
         }
 
         [TestCleanup]

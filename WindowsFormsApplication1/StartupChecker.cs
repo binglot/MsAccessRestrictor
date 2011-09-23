@@ -4,17 +4,17 @@ using MsAccessRestrictor.Properties;
 using MsAccessRestrictor.Wrappers;
 
 namespace MsAccessRestrictor {
-    public class StartupChecker {
+    public class StartUpChecker {
         private readonly Settings _settings;
         private readonly IMessageWriter _messageWriter;
         private readonly IProcess _process;
 
-        public StartupChecker()
+        public StartUpChecker()
             : this(Settings.Default, new MessageWriter(), new ProcessBase()) {
             //
         }
 
-        internal StartupChecker(Settings settings, IMessageWriter messageWriter, IProcess process) {
+        internal StartUpChecker(Settings settings, IMessageWriter messageWriter, IProcess process) {
             _settings = settings;
             _messageWriter = messageWriter;
             _process = process;
