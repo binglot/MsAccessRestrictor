@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MsAccessRestrictor.Interfaces;
 
-namespace MsAccessRestrictor {
+namespace MsAccessRestrictor.Main {
     public class FeaturesManager : IFeaturesManager {
         private readonly List<IFeature> _features;
 
@@ -19,15 +19,19 @@ namespace MsAccessRestrictor {
         
         public void ClearAll() {
             _features.ForEach(f => f.Clear());
+        }
+        
+        ~FeaturesManager() {
             DisposeAll();
+        }
+
+        public virtual void Dispose() {
+            DisposeAll();
+            GC.SuppressFinalize(this);
         }
 
         void DisposeAll() {
             _features.OfType<IDisposable>().ToList().ForEach(f => f.Dispose());
-        }
-
-        public void Dispose() {
-            DisposeAll();
         }
     }
 }

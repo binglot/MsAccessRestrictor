@@ -4,6 +4,7 @@ using System.Linq;
 using MsAccessRestrictor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MsAccessRestrictor.Features;
+using MsAccessRestrictor.Main;
 
 namespace MsAccessRestrictorTests {
     [TestClass]

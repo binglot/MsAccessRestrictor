@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using MsAccessRestrictor.Interfaces;
+using MsAccessRestrictor.Utils;
 
 namespace MsAccessRestrictor.Features {
     internal class WindowButtons : IFeature {
@@ -18,7 +19,7 @@ namespace MsAccessRestrictor.Features {
         }
 
         public WindowButtons() {
-            _msAccessWindow = Utils.GetMsAccessWindowHandle();
+            _msAccessWindow = WinApi.GetMsAccessWindowHandle();
         }
 
         public void Run() {

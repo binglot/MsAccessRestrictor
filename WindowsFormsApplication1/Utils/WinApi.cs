@@ -3,10 +3,26 @@ using System.Runtime.InteropServices;
 using System.Text;
 using MsAccessRestrictor.Features;
 
-namespace MsAccessRestrictor {
+namespace MsAccessRestrictor.Utils {
     class WinApi {
         //
-        // API Calls
+        // WinAPI Constants
+        //
+
+        const string MsAccessClassName = "OMAIN";
+
+        static class WindowPosition {
+            public static readonly IntPtr TopMost = new IntPtr(-1);
+            public static readonly IntPtr NoTopMost = new IntPtr(-2);
+            
+            public const UInt32 TopMostFlags = NoMove | NoSize;
+            const UInt32 NoSize = 0x0001;
+            const UInt32 NoMove = 0x0002;
+            
+        }
+
+        //
+        // Windows API Calls
         //
 
         //
@@ -68,7 +84,7 @@ namespace MsAccessRestrictor {
         // Structs
         //
 
-        #pragma warning disable 649, 169
+#pragma warning disable 649, 169
         public struct HookStruct {
             public int VkCode;
             private int _scanCode;
@@ -76,6 +92,21 @@ namespace MsAccessRestrictor {
             private int _time;
             private int _dwExtraInfo;
         }
-        #pragma warning restore 649, 169
+#pragma warning restore 649, 169
+
+        //
+        // Wrappers
+        //
+
+        public static IntPtr GetMsAccessWindowHandle() {
+            return FindWindow(MsAccessClassName, null);
+        }
+
+        public static void SetWindowTopMost(IntPtr window, bool enable) {
+            var position = enable ? WindowPosition.TopMost : WindowPosition.NoTopMost;
+
+            SetWindowPos(window, position, 0, 0, 0, 0, WindowPosition.TopMostFlags);
+            SetForegroundWindow(window);
+        }
     }
 }

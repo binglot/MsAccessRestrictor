@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using MsAccessRestrictor.Forms;
 using MsAccessRestrictor.Interfaces;
 using MsAccessRestrictor.Properties;
+using MsAccessRestrictor.Utils;
 
 namespace MsAccessRestrictor.Features {
     class KeyboardHooking : IFeature {

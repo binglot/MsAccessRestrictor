@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using MsAccessRestrictor.Interfaces;
+using MsAccessRestrictor.Utils;
 
 namespace MsAccessRestrictor.Forms {
     public partial class PasswordForm : Form, IPasswordForm {
@@ -25,7 +26,7 @@ namespace MsAccessRestrictor.Forms {
         }
 
         private void SetTopMostWindow(bool enable) {
-            Utils.SetTopMostWindow(Handle, enable);
+            WinApi.SetWindowTopMost(Handle, enable);
         }
     }
 }

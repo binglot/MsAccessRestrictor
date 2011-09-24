@@ -1,5 +1,6 @@
 using System;
 using MsAccessRestrictor.Interfaces;
+using MsAccessRestrictor.Utils;
 
 namespace MsAccessRestrictor.Features {
     class WindowFocus : IFeature {
@@ -11,7 +12,7 @@ namespace MsAccessRestrictor.Features {
         }
 
         public WindowFocus() {
-            _windowHandle = Utils.GetMsAccessWindowHandle();
+            _windowHandle = WinApi.GetMsAccessWindowHandle();
         }
 
         public void Run() {
@@ -24,7 +25,7 @@ namespace MsAccessRestrictor.Features {
 
         public static void MakeTopMost(IntPtr window) {
             RestoreAndMaximize(window);
-            Utils.SetTopMostWindow(window, true);
+            WinApi.SetWindowTopMost(window, true);
         }
 
         private static void RestoreAndMaximize(IntPtr window) {
@@ -37,7 +38,7 @@ namespace MsAccessRestrictor.Features {
         }
 
         public static void MakeNormal(IntPtr window) {
-            Utils.SetTopMostWindow(window, false);
+            WinApi.SetWindowTopMost(window, false);
         }
     }
 }

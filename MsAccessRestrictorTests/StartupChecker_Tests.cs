@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using MsAccessRestrictor;
 using MsAccessRestrictor.Interfaces;
+using MsAccessRestrictor.Main;
 using MsAccessRestrictor.Properties;
 using Application = Microsoft.Office.Interop.Access.Application;
 

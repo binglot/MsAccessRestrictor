@@ -1,9 +1,8 @@
-﻿using System.Diagnostics;
-using MsAccessRestrictor.Interfaces;
+﻿using MsAccessRestrictor.Interfaces;
 using MsAccessRestrictor.Properties;
 using MsAccessRestrictor.Wrappers;
 
-namespace MsAccessRestrictor {
+namespace MsAccessRestrictor.Main {
     public class StartUpChecker {
         private readonly Settings _settings;
         private readonly IMessageWriter _messageWriter;

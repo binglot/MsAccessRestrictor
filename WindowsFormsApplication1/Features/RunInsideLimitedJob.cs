@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using MsAccessRestrictor.Interfaces;
+using MsAccessRestrictor.Utils;
 
 namespace MsAccessRestrictor.Features {
     class RunInsideLimitedJob : IFeature, IDisposable {

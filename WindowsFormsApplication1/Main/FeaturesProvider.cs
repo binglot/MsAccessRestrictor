@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using MsAccessRestrictor.Features;
 using MsAccessRestrictor.Interfaces;
 
-namespace MsAccessRestrictor {
+namespace MsAccessRestrictor.Main {
     class FeaturesProvider : IFeaturesProvider {
         public IEnumerable<IFeature> GetFeatures() {
             yield return new CtrlAltDelete();
