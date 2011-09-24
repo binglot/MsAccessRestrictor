@@ -25,6 +25,7 @@ namespace MsAccessRestrictor.Main {
         }
 
         private void CheckOpenMsAccess() {
+            // TODO: put these constants in the Resources
             const string closeError = "Close MsAccess before running the application or change your settings.";
             const string openError = "Open MsAccess before running the application or change your settings.";
             const string moreThanOneError = "Leave only one MsAccess window open before running the application or change your settings.";

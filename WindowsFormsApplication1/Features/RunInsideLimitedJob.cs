@@ -18,6 +18,7 @@ namespace MsAccessRestrictor.Features {
         const string MsAccessName = "MSACCESS";
         const string JobName = "MsAccess_JobGroup";
         readonly IntPtr _msAccessWindow;
+        // TODO: change this IntPtr to a SafeHandle will reduce the need for features being disposable
         IntPtr _job;
 
         public RunInsideLimitedJob() {
@@ -88,9 +89,10 @@ namespace MsAccessRestrictor.Features {
     #region Interop Structs
 
     public enum JobObjectInfoType {
+        None = 0,
         AssociateCompletionPortInformation = 7,
         BasicLimitInformation = 2,
-        BasicUIRestrictions = 4,
+        BasicUiRestrictions = 4,
         EndOfJobTimeInformation = 6,
         ExtendedLimitInformation = 9,
         SecurityLimitInformation = 5,
@@ -100,7 +102,7 @@ namespace MsAccessRestrictor.Features {
     [StructLayout(LayoutKind.Sequential)]
     public struct SecurityAttributes {
         public int nLength;
-        public IntPtr lpSecurityDescriptor;
+        private IntPtr lpSecurityDescriptor;
         public int bInheritHandle;
     }
 
@@ -118,6 +120,7 @@ namespace MsAccessRestrictor.Features {
     }
 
     public enum LimitFlags {
+        None = 0x00000000,
         JobObjectLimitActiveProcess = 0x00000008,
         JobObjectLimitAffinity = 0x00000010,
         JobObjectLimitBreakawayOk = 0x00000800,

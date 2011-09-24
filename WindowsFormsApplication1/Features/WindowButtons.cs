@@ -86,7 +86,7 @@ namespace MsAccessRestrictor.Features {
             var buttonLabel = GetButtonLabel(position, windowMenu);
 
             // Skip the menu separator
-            if (buttonLabel == "") {
+            if (String.IsNullOrEmpty(buttonLabel)) {
                 return;
             }
 

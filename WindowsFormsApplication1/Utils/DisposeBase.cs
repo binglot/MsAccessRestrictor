@@ -2,7 +2,7 @@
 
 namespace MsAccessRestrictor.Utils {
     // Design pattern for a base class.
-    internal abstract class DisposeBase : IDisposable {
+    public abstract class DisposeBase : IDisposable {
         private bool _disposed; // false by default
 
         public void Dispose() {

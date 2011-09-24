@@ -21,6 +21,7 @@ namespace MsAccessRestrictor.Features {
         static bool _passwordDialogIsOpen;
         int _hookId;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
         public KeyboardHooking() : this(new PasswordForm(), Settings.Default) { }
 
         public KeyboardHooking(IPasswordForm passwordForm, Settings settings) {

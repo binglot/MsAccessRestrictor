@@ -1,23 +1,24 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.Office.Interop.Access;
 using MsAccessRestrictor.Interfaces;
 using System.Runtime.InteropServices;
 using MsAccessRestrictor.Properties;
+using MsAccessRestrictor.Utils;
 
 namespace MsAccessRestrictor.Features {
-    public class MsAccessView : IFeature, IDisposable {
+    public class MsAccessView : DisposeBase, IFeature {
         const string ToolbarName = "Ribbon";
+        
         readonly Settings _settings;
-        _Application _accessApp;
+        Application _accessApp;
+        bool _disposed;
 
         public MsAccessView() : this(Settings.Default) { }
 
         internal MsAccessView(Settings applicationSettings) {
             _settings = applicationSettings;
 
-            try
-            {
+            try {
                 if (_settings.OpenMsAccess) {
                     _accessApp = new Application();
                 }
@@ -25,8 +26,7 @@ namespace MsAccessRestrictor.Features {
                     _accessApp = (Application)Marshal.GetActiveObject("Access.Application");
                 }
             }
-            catch (COMException cex)
-            {
+            catch (COMException cex) {
                 Debug.WriteLine(cex);
             }
         }
@@ -64,11 +64,23 @@ namespace MsAccessRestrictor.Features {
             }
         }
 
-        public void Dispose() {
-            if (_accessApp != null) {
-                Marshal.ReleaseComObject(_accessApp);
-                _accessApp = null;
+        protected override void Dispose(bool disposing) {
+            if (!_disposed) {
+                if (disposing) {
+                    // Release managed resources
+                    // ...
+                }
+
+                // Release unmanaged resources
+                if (_accessApp != null) {
+                    Marshal.ReleaseComObject(_accessApp);
+                    _accessApp = null;
+                }
+
+                _disposed = true;
             }
+
+            base.Dispose(disposing);
         }
 
         void ShowToolbar(bool show) {
@@ -76,12 +88,10 @@ namespace MsAccessRestrictor.Features {
         }
 
         void ShowNavigationPane(bool show) {
-            if (show)
-            {
+            if (show) {
                 _accessApp.DoCmd.SelectObject(AcObjectType.acTable, InDatabaseWindow: true);
             }
-            else
-            {
+            else {
                 _accessApp.DoCmd.NavigateTo("acNavigationCategoryObjectType");
                 _accessApp.DoCmd.RunCommand(AcCommand.acCmdWindowHide);
             }
