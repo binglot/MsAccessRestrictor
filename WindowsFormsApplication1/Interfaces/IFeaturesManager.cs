@@ -1,5 +1,5 @@
 namespace MsAccessRestrictor.Interfaces {
-    public interface IFeaturesManager : System.IDisposable {
+    public interface IFeaturesManager {
         void SetAll();
         void ClearAll();
     }
