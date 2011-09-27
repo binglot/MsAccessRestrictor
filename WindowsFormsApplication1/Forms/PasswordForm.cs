@@ -16,6 +16,10 @@ namespace MsAccessRestrictor.Forms {
             set { txtPassword.Text = value; }
         }
 
+        public void SetTopLevel() {
+            OnShown(null);
+        }
+
         private void btnOk_Click(object sender, EventArgs e) {
             Close();
         }

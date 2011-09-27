@@ -75,6 +75,7 @@ namespace MsAccessRestrictor.Features {
         private void PasswordDialog() {
             lock (_locker) {
                 if (_passwordDialogIsOpen) {
+                    _passwordForm.SetTopLevel();
                     return;
                 }
 
