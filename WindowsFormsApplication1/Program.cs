@@ -19,9 +19,10 @@ namespace MsAccessRestrictor {
                 // check that the file exists
             }
 
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
             using (var features = new FeaturesManager()) {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm(features));
             }
         }
