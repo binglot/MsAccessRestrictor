@@ -56,6 +56,7 @@ namespace MsAccessRestrictor.Features {
                 case 261:
                     if (wParam == 260 && (lParam.Flags == 32) && (lParam.VkCode == F12Key)) {  // Alt+F12
                         PasswordDialog();
+                        return 1;
                     }
 
                     shortcutPressed = PressedAlt(lParam) ||
