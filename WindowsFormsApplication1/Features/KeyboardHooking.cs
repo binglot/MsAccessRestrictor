@@ -104,7 +104,7 @@ namespace MsAccessRestrictor.Features {
         #region Key Presses
 
         private static bool PressedAlt(WinApi.HookStruct lParam) {
-            return (lParam.Flags == 32 && lParam.VkCode != F12Key);
+            return (lParam.Flags == 32);
         }
 
         private static bool PressedLeftWindowsKey(WinApi.HookStruct lParam) {
