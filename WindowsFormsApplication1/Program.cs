@@ -15,9 +15,8 @@ namespace MsAccessRestrictor {
         [STAThread]
         static void Main() {
 
-            if (_settings.OpenDbFile) {
-                // check that the file exists
-            }
+            var startUpChecker = new StartUpChecker();
+            startUpChecker.Run();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

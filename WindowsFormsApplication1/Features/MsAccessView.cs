@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Microsoft.Office.Interop.Access;
 using MsAccessRestrictor.Interfaces;
 using System.Runtime.InteropServices;
@@ -8,14 +9,14 @@ using MsAccessRestrictor.Utils;
 namespace MsAccessRestrictor.Features {
     public class MsAccessView : DisposeBase, IFeature {
         const string ToolbarName = "Ribbon";
-        
+
         readonly Settings _settings;
         Application _accessApp;
         bool _disposed;
 
         public MsAccessView() : this(Settings.Default) { }
 
-        internal MsAccessView(Settings applicationSettings) {
+        public MsAccessView(Settings applicationSettings) {
             _settings = applicationSettings;
 
             try {
@@ -48,6 +49,9 @@ namespace MsAccessRestrictor.Features {
             catch (COMException cex) {
                 Debug.WriteLine(cex);
             }
+            catch (Exception e) {
+                Debug.WriteLine(e);
+            }
         }
 
         public void Clear() {
@@ -61,6 +65,9 @@ namespace MsAccessRestrictor.Features {
             }
             catch (COMException cex) {
                 Debug.WriteLine(cex);
+            }
+            catch (Exception e) {
+                Debug.WriteLine(e);
             }
         }
 
