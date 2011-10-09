@@ -3,13 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsAccessRestrictor.Tests", "MsAccessRestrictorTests\MsAccessRestrictor.Tests.csproj", "{DCFA094F-F1D8-46DF-80BC-5884300C1E5A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D2022820-5638-456A-977B-B977CEBD3B10}"
-	ProjectSection(SolutionItems) = preProject
-		Local.testsettings = Local.testsettings
-		MsAccessRestrictor.vsmdi = MsAccessRestrictor.vsmdi
-		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsAccessRestrictor", "MsAccessRestrictor\MsAccessRestrictor.csproj", "{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}"
 EndProject
 Global
