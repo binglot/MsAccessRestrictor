@@ -1,15 +1,33 @@
-It's a C# project written specificaly for Microsoft Windows as a favour for a friend of mine.
+Author:  Bartosz Inglot
+Date:    9 October 2011
+Version: 1.0
+
 
 Description
 
-The application aims at raising productivity at work for those working with Microsoft Access by disabling certain features of Microsoft Windows (e.g. blocking certain keyboard shortcuts and disabling taskbar) and it lets re-enable them by entering the correct password.
+The application aims at raising productivity at work for those working with Microsoft Access by limiting what the user can do with the application and operating system. 
 
-To do
 
-- Write unit tests.
-- Check if there is no instance of MsAccess running and if so then alert and stop executing.
-- Disable more shortcuts - e.g. Ctrl+O (Open File).
-- Disable spawning new processes from within MsAccess (e.g. by using the Open File dialog).
-- Document native WinAPI methods (P/Invoke).
-- Fix: the Restore button doesn't re-enable.
-- Write a documentation.
+Features
+
+- hide Taskbar
+- disable Task Manager (Ctrl+Alt+Delete)
+- hook keyboard (disable Ctrl, Alt and Windows Key, and pressing Alt+F12 causes a password form for disabling the application to come up)
+- make MsAccess 'always on top'
+- disable MsAccess window manipulation (e.g. Maximizing, Closing, etc.)
+- disable spawning new processes from MsAccess (e.g. by using the Open File dialog)
+- hide Ribbon Toolbar and Navigation Pane in MsAccess
+- can either use already opened MsAccess, or create a new one and open a database file
+- is highly configurable via an XML file
+
+
+To do list
+
+- rethink the name
+- add full coverage of unit tests
+- add continuous integration
+- document native methods (P/Invoke)
+- fix the Restore button which doesn't re-enable
+- write documentation
+- make running features asynchronously (hooking keyboard doesn't work if run this way)
+- add dependency injection container
