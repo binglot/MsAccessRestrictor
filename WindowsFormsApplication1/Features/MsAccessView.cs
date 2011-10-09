@@ -34,6 +34,10 @@ namespace MsAccessRestrictor.Features {
 
         public void Run() {
             try {
+                if (_accessApp == null) {
+                    return;
+                }
+
                 if (_settings.OpenDbFile) {
                     _accessApp.OpenCurrentDatabase(_settings.DbFilePath);
                 }
