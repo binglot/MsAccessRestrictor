@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsAccessRestrictor", "WindowsFormsApplication1\MsAccessRestrictor.csproj", "{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsAccessRestrictor.Tests", "MsAccessRestrictorTests\MsAccessRestrictor.Tests.csproj", "{DCFA094F-F1D8-46DF-80BC-5884300C1E5A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D2022820-5638-456A-977B-B977CEBD3B10}"
@@ -11,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		MsAccessRestrictor.vsmdi = MsAccessRestrictor.vsmdi
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsAccessRestrictor", "MsAccessRestrictor\MsAccessRestrictor.csproj", "{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -25,16 +25,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|x86.ActiveCfg = Debug|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|x86.Build.0 = Debug|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|Any CPU.ActiveCfg = Release|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|Mixed Platforms.Build.0 = Release|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|x86.ActiveCfg = Release|x86
-		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|x86.Build.0 = Release|x86
 		{DCFA094F-F1D8-46DF-80BC-5884300C1E5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DCFA094F-F1D8-46DF-80BC-5884300C1E5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCFA094F-F1D8-46DF-80BC-5884300C1E5A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -45,6 +35,16 @@ Global
 		{DCFA094F-F1D8-46DF-80BC-5884300C1E5A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DCFA094F-F1D8-46DF-80BC-5884300C1E5A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DCFA094F-F1D8-46DF-80BC-5884300C1E5A}.Release|x86.ActiveCfg = Release|Any CPU
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|x86.ActiveCfg = Debug|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Debug|x86.Build.0 = Debug|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|Any CPU.ActiveCfg = Release|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|Mixed Platforms.Build.0 = Release|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|x86.ActiveCfg = Release|x86
+		{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

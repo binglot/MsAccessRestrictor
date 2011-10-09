@@ -60,7 +60,7 @@
     <Compile Include="StartupChecker_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WindowsFormsApplication1\MsAccessRestrictor.csproj">
+    <ProjectReference Include="..\MsAccessRestrictor\MsAccessRestrictor.csproj">
       <Project>{E04EDC58-0B5B-4EC3-835F-BB59E7C5182E}</Project>
       <Name>MsAccessRestrictor</Name>
     </ProjectReference>
